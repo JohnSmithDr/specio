@@ -1,0 +1,39 @@
+{
+  "name": "specio",
+  "version": "0.0.0",
+  "description": "Build rest api client with specification.",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha ./test/tests.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JohnSmithDr/specio.git"
+  },
+  "keywords": [
+    "specio",
+    "spec",
+    "restful",
+    "rest",
+    "api",
+    "client",
+    "superagent",
+    "supertest",
+    "swagger",
+    "swagger-client"
+  ],
+  "author": "johnsmith1st <johnsmith1st@live.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JohnSmithDr/specio/issues"
+  },
+  "homepage": "https://github.com/JohnSmithDr/specio#readme",
+  "dependencies": {
+    "superagent": "^2.2.0"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "express": "^4.14.0",
+    "mocha": "^3.0.2"
+  }
+}
