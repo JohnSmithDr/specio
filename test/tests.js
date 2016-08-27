@@ -78,16 +78,16 @@ describe('specio with server', function () {
         res.send('Create Resource');
       });
     resourcesRouter.get('/:id', (req, res) => {
-      res.send('Get Resource');
+      res.send(`Get Resource: ${req.params.id}`);
     });
     resourcesRouter.put('/:id', (req, res) => {
-      res.send('Put Resource');
+      res.send(`Put Resource: ${req.params.id}`);
     });
     resourcesRouter.patch('/:id', (req, res) => {
-      res.send('Patch Resource');
+      res.send(`Patch Resource: ${req.params.id}`);
     });
     resourcesRouter.delete('/:id', (req, res) => {
-      res.send('Delete Resource');
+      res.send(`Delete Resource: ${req.params.id}`);
     });
 
     app.use('/', defaultRouter);
@@ -119,30 +119,30 @@ describe('specio with server', function () {
   });
 
   it('should get resource', function () {
-    return client.api.getResource()
+    return client.api.getResource({ id: 'foo' })
       .then(res => {
-        expect(res.text).to.equal('Get Resource');
+        expect(res.text).to.equal('Get Resource: foo');
       });
   });
 
   it('should put resource', function () {
-    return client.api.putResource()
+    return client.api.putResource({ id: 'foo' })
       .then(res => {
-        expect(res.text).to.equal('Put Resource');
+        expect(res.text).to.equal('Put Resource: foo');
       });
   });
 
   it('should patch resource', function () {
-    return client.api.patchResource()
+    return client.api.patchResource({ id: 'foo' })
       .then(res => {
-        expect(res.text).to.equal('Patch Resource');
+        expect(res.text).to.equal('Patch Resource: foo');
       });
   });
 
   it('should delete resource', function () {
-    return client.api.deleteResource()
+    return client.api.deleteResource({ id: 'foo' })
       .then(res => {
-        expect(res.text).to.equal('Delete Resource');
+        expect(res.text).to.equal('Delete Resource: foo');
       });
   });
 
