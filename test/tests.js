@@ -5,85 +5,145 @@ const express = require('express');
 
 const specio = require('..');
 
-describe('specio', function () {
-
-  let spec = {
-    schemas: ['http'],
-    host: 'localhost',
-    basePath: '/',
-    paths: {
-      '/': {
-        get: {
-          operationId: 'index'
-        }
+let spec = {
+  schemas: ['http'],
+  host: 'localhost',
+  basePath: '/',
+  paths: {
+    '/': {
+      get: {
+        operationId: 'index'
+      }
+    },
+    '/resources': {
+      get: {
+        operationId: 'queryResources'
       },
-      '/resource': {
-        get: {
-          operationId: 'queryResources'
-        },
-        post: {
-          operationId: 'createResource'
-        }
+      post: {
+        operationId: 'createResource'
+      }
+    },
+    '/resources/{id}': {
+      get: {
+        operationId: 'getResource'
       },
-      '/resource/{id}': {
-        get: {
-          operationId: 'getResources'
-        },
-        put: {
-          operationId: 'putResource'
-        },
-        patch: {
-          operationId: 'patchResource'
-        },
-        delete: {
-          operationId: 'deleteResource'
-        }
+      put: {
+        operationId: 'putResource'
+      },
+      patch: {
+        operationId: 'patchResource'
+      },
+      delete: {
+        operationId: 'deleteResource'
       }
     }
-  };
+  }
+};
 
-  describe('constructor', function () {
+describe('specio', function () {
 
-    it('should be ok', function () {
-      let client = specio(spec);
-      expect(client).to.be.instanceOf(specio.Client);
-      expect(client.api.index).to.be.a('function');
-      expect(client.api.queryResources).to.be.a('function');
-      expect(client.api.createResource).to.be.a('function');
-      expect(client.api.getResources).to.be.a('function');
-      expect(client.api.putResource).to.be.a('function');
-      expect(client.api.patchResource).to.be.a('function');
-      expect(client.api.deleteResource).to.be.a('function');
-    });
-
+  it('should create client with api specification', function () {
+    let client = specio(spec);
+    expect(client).to.be.instanceOf(specio.Client);
+    expect(client.api.index).to.be.a('function');
+    expect(client.api.queryResources).to.be.a('function');
+    expect(client.api.createResource).to.be.a('function');
+    expect(client.api.getResource).to.be.a('function');
+    expect(client.api.putResource).to.be.a('function');
+    expect(client.api.patchResource).to.be.a('function');
+    expect(client.api.deleteResource).to.be.a('function');
   });
 
-  describe.only('with-server', function () {
+});
 
-    let app, client;
+describe('specio with server', function () {
 
-    before(function () {
+  let app, client;
 
-      app = express();
+  before(function () {
 
-      app.use(express.Router()
-        .get('/', (req, res) => {
-          res.send('GET index');
-        })
-      );
+    app = express();
 
-      client = specio(spec);
-      return client.useApp(app, 6969);
+    let defaultRouter = express.Router();
+    defaultRouter.get('/', (req, res) => {
+      res.send('GET index');
     });
 
-    it('should get index', function () {
-      return client.api.index()
-        .then(res => {
-          expect(res.text).to.equal('GET index');
-        });
+    let resourcesRouter = express.Router();
+    resourcesRouter
+      .get('/', (req, res) => {
+        res.send('Query Resources');
+      })
+      .post('/', (req, res) => {
+        res.send('Create Resource');
+      });
+    resourcesRouter.get('/:id', (req, res) => {
+      res.send('Get Resource');
+    });
+    resourcesRouter.put('/:id', (req, res) => {
+      res.send('Put Resource');
+    });
+    resourcesRouter.patch('/:id', (req, res) => {
+      res.send('Patch Resource');
+    });
+    resourcesRouter.delete('/:id', (req, res) => {
+      res.send('Delete Resource');
     });
 
+    app.use('/', defaultRouter);
+    app.use('/resources', resourcesRouter);
 
+    client = specio(spec);
+    return client.useApp(app, 6969);
+  });
+  
+  it('should get index', function () {
+    return client.api.index()
+      .then(res => {
+        expect(res.text).to.equal('GET index');
+      });
+  });
+
+  it('should query resources', function () {
+    return client.api.queryResources()
+      .then(res => {
+        expect(res.text).to.equal('Query Resources');
+      });
+  });
+
+  it('should create resource', function () {
+    return client.api.createResource()
+      .then(res => {
+        expect(res.text).to.equal('Create Resource');
+      });
+  });
+
+  it('should get resource', function () {
+    return client.api.getResource()
+      .then(res => {
+        expect(res.text).to.equal('Get Resource');
+      });
+  });
+
+  it('should put resource', function () {
+    return client.api.putResource()
+      .then(res => {
+        expect(res.text).to.equal('Put Resource');
+      });
+  });
+
+  it('should patch resource', function () {
+    return client.api.patchResource()
+      .then(res => {
+        expect(res.text).to.equal('Patch Resource');
+      });
+  });
+
+  it('should delete resource', function () {
+    return client.api.deleteResource()
+      .then(res => {
+        expect(res.text).to.equal('Delete Resource');
+      });
   });
 
 });
