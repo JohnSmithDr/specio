@@ -8,7 +8,7 @@ const specio = require('..');
 let spec = {
   schemas: ['http'],
   host: 'localhost',
-  basePath: '/',
+  basePath: '/api',
   paths: {
     '/': {
       get: {
@@ -90,13 +90,13 @@ describe('specio with server', function () {
       res.send(`Delete Resource: ${req.params.id}`);
     });
 
-    app.use('/', defaultRouter);
-    app.use('/resources', resourcesRouter);
+    app.use('/api', defaultRouter);
+    app.use('/api/resources', resourcesRouter);
 
     client = specio(spec);
     return client.useApp(app, 6969);
   });
-  
+
   it('should get index', function () {
     return client.api.index()
       .then(res => {
