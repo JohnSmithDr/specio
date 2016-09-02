@@ -1,5 +1,8 @@
 # specio
 
+[![Build Status](https://travis-ci.org/JohnSmithDr/specio.svg?branch=master)](https://travis-ci.org/JohnSmithDr/specio)
+[![Coverage Status](https://coveralls.io/repos/github/JohnSmithDr/specio/badge.svg?branch=master)](https://coveralls.io/github/JohnSmithDr/specio?branch=master)
+
 Build rest api client with specification. It uses swagger 2.0 compatible specification to build the api. It can be use
 as a third party api client builder, and also for test the rest api of your own.
 
