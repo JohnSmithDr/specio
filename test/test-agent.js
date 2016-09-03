@@ -16,6 +16,33 @@ describe('agent', function () {
 
   });
 
+  describe('#host()', function () {
+
+    it('should overwrite host of request url', function () {
+
+      let req = agent.get('/foo').basePath('/api').host('localhost:8080');
+      expect(req.url).to.equal('localhost:8080/api/foo');
+
+    });
+
+  });
+
+  describe('#scheme()', function () {
+
+    it('should overwrite scheme part of request url', function () {
+
+      let req;
+
+      req = agent.get('/foo').basePath('/api').host('localhost:8080').scheme('http');
+      expect(req.url).to.equal('http://localhost:8080/api/foo');
+
+      req = agent.get('/foo').basePath('/api').host('http://localhost:8080').scheme('https');
+      expect(req.url).to.equal('https://localhost:8080/api/foo');
+
+    });
+
+  });
+
   describe('#params()', function () {
 
     it('should overwrite request url with parameters', function () {
