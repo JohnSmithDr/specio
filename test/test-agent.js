@@ -147,6 +147,17 @@ describe('agent', function () {
 
     });
 
+    it('should send request without callback', function () {
+
+      return agent
+        .get('http://example.org')
+        .text()
+        .then(txt => {
+          expect(txt).to.be.a('string').and.have.length.gt(0);
+        });
+
+    });
+
   });
 
   describe('#json()', function () {
@@ -156,6 +167,17 @@ describe('agent', function () {
       return agent
         .get('http://example.org')
         .json(obj => {
+          expect(obj).to.be.an('object').and.be.empty;
+        });
+
+    });
+
+    it('should send request without callback', function () {
+
+      return agent
+        .get('http://example.org')
+        .json()
+        .then(obj => {
           expect(obj).to.be.an('object').and.be.empty;
         });
 

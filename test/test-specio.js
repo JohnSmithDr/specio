@@ -94,4 +94,19 @@ describe('specio', function () {
 
   });
 
+  describe('.load()', function () {
+
+    it('should load swagger doc from url', function () {
+
+      return specio
+        .load('http://petstore.swagger.io/v2/swagger.json')
+        .then(client => {
+          expect(client).to.be.instanceOf(specio.Client);
+          console.log(client.spec);
+        });
+
+    });
+
+  });
+
 });
