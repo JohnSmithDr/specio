@@ -2,7 +2,6 @@
 
 const expect = require('chai').expect;
 const express = require('express');
-
 const specio = require('..');
 
 let spec = {
@@ -39,22 +38,6 @@ let spec = {
     }
   }
 };
-
-describe('specio', function () {
-
-  it('should create client with api specification', function () {
-    let client = specio(spec);
-    expect(client).to.be.instanceOf(specio.Client);
-    expect(client.api.index).to.be.a('function');
-    expect(client.api.queryResources).to.be.a('function');
-    expect(client.api.createResource).to.be.a('function');
-    expect(client.api.getResource).to.be.a('function');
-    expect(client.api.putResource).to.be.a('function');
-    expect(client.api.patchResource).to.be.a('function');
-    expect(client.api.deleteResource).to.be.a('function');
-  });
-
-});
 
 describe('specio with server', function () {
 
