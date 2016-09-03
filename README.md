@@ -50,25 +50,30 @@ let spec = {
 
 let client = specio(spec);
 
-client.api.index();
+// can use a specific promise
+// client.usePromise(require('bluebird'));
+
+// all the operations are wrapped in client.api
+
+client.api.index().then(res => handle(res));
 // -> GET /api/index
 
-client.api.queryResources({}, { foo: 'bar' });
+client.api.queryResources().query({ foo: 'bar' });
 // -> GET /api/resources?foo=bar
 
-client.api.createResource({}, { foo: 'bar' });
+client.api.createResource().send({ foo: 'bar' });
 // -> POST /api/resources -d '{"foo":"bar"}'
 
-client.api.getResource({ id: 'foo' });
+client.api.getResource().params({ id: 'foo' });
 // -> GET /api/resources/foo
 
-client.api.putResource({ id: 'foo' }, { foo: 'Bar' });
+client.api.putResource().params({ id: 'foo' }).send({ foo: 'Bar' });
 // -> PUT /api/resources/foo -d '{"foo":"Bar"}'
 
-client.api.patchResource({ id: 'foo' }, { foo: 'Bar' });
+client.api.patchResource().params({ id: 'foo' }).send({ foo: 'Bar' });
 // -> PATCH /api/resources/foo -d '{"foo":"Bar"}'
 
-client.api.deleteResource({ id: 'foo' });
+client.api.deleteResource().params({ id: 'foo' });
 // -> DELETE /api/resources/foo
 
 ```
@@ -76,17 +81,11 @@ client.api.deleteResource({ id: 'foo' });
 
 ## Todo
 
-1.  to support request content types:
-    +  form
-    +  xml
-2.  to support response content types:
-    +  json
-    +  xml
-3.  api security:
+1.  api security:
     +  api key
     +  oauth2
-4.  params validation \[optional\]
-5.  and more ...
+2.  params validation \[optional\]
+3.  and more ...
 
 
 ## License
