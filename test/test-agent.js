@@ -135,6 +135,34 @@ describe('agent', function () {
 
   });
 
+  describe('#text()', function () {
+
+    it('should send request and get text', function () {
+
+      return agent
+        .get('http://example.org')
+        .text(txt => {
+          expect(txt).to.be.a('string').and.have.length.gt(0);
+        });
+
+    });
+
+  });
+
+  describe('#json()', function () {
+
+    it('should send request and json result', function () {
+
+      return agent
+        .get('http://example.org')
+        .json(obj => {
+          expect(obj).to.be.an('object').and.be.empty;
+        });
+
+    });
+
+  });
+
 });
 
 
