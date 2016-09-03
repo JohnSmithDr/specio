@@ -91,6 +91,20 @@ describe('agent', function () {
 
     });
 
+    it('should not invoke callback if request failure', function () {
+
+      return agent
+        .get('http://example.org/foo')
+        .then(() => {
+          return Promise.reject(Error('Should not be here'));
+        })
+        .catch(err => {
+          expect(err.message).to.equal('Not Found');
+          expect(err.response.status).to.equal(404);
+        });
+
+    });
+
   });
 
   describe('#catch()', function () {
@@ -102,6 +116,19 @@ describe('agent', function () {
         .catch(err => {
           expect(err.message).to.equal('Not Found');
           expect(err.response.status).to.equal(404);
+        });
+
+    });
+
+    it('should not invoke callback if request success', function () {
+
+      return agent
+        .get('http://example.org')
+        .catch(() => {
+          return Promise.reject(Error('Should not be here'));
+        })
+        .then(res => {
+          expect(res.status).to.equal(200);
         });
 
     });
