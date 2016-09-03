@@ -119,28 +119,32 @@ describe('specio with server', function () {
   });
 
   it('should get resource', function () {
-    return client.api.getResource({ id: 'foo' })
+    return client.api.getResource()
+      .params({ id: 'foo' })
       .then(res => {
         expect(res.text).to.equal('Get Resource: foo');
       });
   });
 
   it('should put resource', function () {
-    return client.api.putResource({ id: 'foo' })
+    return client.api.putResource()
+      .params({ id: 'foo' })
       .then(res => {
         expect(res.text).to.equal('Put Resource: foo');
       });
   });
 
   it('should patch resource', function () {
-    return client.api.patchResource({ id: 'foo' })
+    return client.api.patchResource()
+      .params({ id: 'foo' })
       .then(res => {
         expect(res.text).to.equal('Patch Resource: foo');
       });
   });
 
   it('should delete resource', function () {
-    return client.api.deleteResource({ id: 'foo' })
+    return client.api.deleteResource()
+      .params({ id: 'foo' })
       .then(res => {
         expect(res.text).to.equal('Delete Resource: foo');
       });
