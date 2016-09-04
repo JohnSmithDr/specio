@@ -83,6 +83,7 @@ describe('agent', function () {
 
     it('should send request and get response in promise', function () {
 
+      this.timeout(10 * 1000);
       return agent
         .get('http://example.org')
         .then(res => {
@@ -93,6 +94,7 @@ describe('agent', function () {
 
     it('should not invoke callback if request failure', function () {
 
+      this.timeout(10 * 1000);
       return agent
         .get('http://example.org/foo')
         .then(() => {
@@ -111,6 +113,7 @@ describe('agent', function () {
 
     it('should send request and catch error', function () {
 
+      this.timeout(10 * 1000);
       return agent
         .get('http://example.org/foo')
         .catch(err => {
@@ -122,6 +125,7 @@ describe('agent', function () {
 
     it('should not invoke callback if request success', function () {
 
+      this.timeout(10 * 1000);
       return agent
         .get('http://example.org')
         .catch(() => {
@@ -139,6 +143,7 @@ describe('agent', function () {
 
     it('should send request and get text', function () {
 
+      this.timeout(10 * 1000);
       return agent
         .get('http://example.org')
         .text(txt => {
@@ -149,6 +154,7 @@ describe('agent', function () {
 
     it('should send request without callback', function () {
 
+      this.timeout(10 * 1000);
       return agent
         .get('http://example.org')
         .text()
@@ -164,6 +170,7 @@ describe('agent', function () {
 
     it('should send request and json result', function () {
 
+      this.timeout(10 * 1000);
       return agent
         .get('http://example.org')
         .json(obj => {
@@ -174,6 +181,7 @@ describe('agent', function () {
 
     it('should send request without callback', function () {
 
+      this.timeout(10 * 1000);
       return agent
         .get('http://example.org')
         .json()

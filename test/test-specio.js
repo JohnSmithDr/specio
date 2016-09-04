@@ -70,6 +70,15 @@ describe('specio', function () {
 
   });
 
+  describe('#useApiKey()', function () {
+
+    it('should be ok', function () {
+      let client = specio({}).useApiKey('special-key');
+      expect(client._apiKey).to.equal('special-key');
+    });
+
+  });
+
   describe('#spec', function () {
 
     it('should be ok', function () {
@@ -98,11 +107,19 @@ describe('specio', function () {
 
     it('should load swagger doc from url', function () {
 
+      this.timeout(30 * 1000);
       return specio
         .load('http://petstore.swagger.io/v2/swagger.json')
         .then(client => {
           expect(client).to.be.instanceOf(specio.Client);
-          console.log(client.spec);
+
+          client.useApiKey('special-key');
+          let req;
+          req = client.api.getPetById();
+          expect(req.header['api_key']).to.equal('special-key');
+
+          req = client.api.getInventory();
+          expect(req.header['api_key']).to.equal('special-key');
         });
 
     });
