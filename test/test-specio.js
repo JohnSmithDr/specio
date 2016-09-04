@@ -55,6 +55,11 @@ describe('specio', function () {
       expect(client._promiseConstructor).to.equal(Promise);
     });
 
+    it('should fail for invalid promise constructor', function () {
+      let client = specio({});
+      expect(() => client.usePromise(String)).to.throw(Error, /expected a promise constructor/);
+    });
+
   });
 
   describe('#useApp()', function () {
