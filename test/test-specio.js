@@ -137,6 +137,17 @@ describe('specio', function () {
 
     });
 
+    it('should fail for invalid url', function () {
+      this.timeout(30 * 1000);
+      return specio
+        .load('http://example.org/foo')
+        .then(c => Promise.reject('should not be here'))
+        .catch(err => {
+          expect(err).to.be.an('error');
+          expect(err.message).to.equal('Not Found');
+        })
+    });
+
   });
 
 });
