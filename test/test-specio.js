@@ -73,6 +73,14 @@ describe('specio', function () {
         });
     });
 
+    it('should failed for invalid handler', function () {
+      let client = specio({});
+      return client.useApp('foo', 3000)
+        .catch(err => {
+          expect(err).to.be.an('error');
+        });
+    });
+
   });
 
   describe('#useApiKey()', function () {
